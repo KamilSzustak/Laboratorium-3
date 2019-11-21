@@ -13,6 +13,10 @@ class CommentServiceImpl @Autowired constructor(
     private val commentRepository: CommentRepository
 ) : CommentService {
 
+    init {
+        //println(commentRepository.findAllByPostId(1))
+    }
+
     override fun getAll(): List<Comment> = commentRepository.findAll()
 
     override fun getById(id: Int): Comment? = commentRepository.findByIdOrNull(id)

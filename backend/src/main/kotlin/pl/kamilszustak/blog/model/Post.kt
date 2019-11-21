@@ -6,7 +6,10 @@ import javax.persistence.*
 @Entity
 @Table(name = "posts")
 data class Post(
+    @Column(name = "title")
     var title: String = "",
+
+    @Column(name = "content")
     var content: String = ""
 ) : DatabaseEntity() {
 

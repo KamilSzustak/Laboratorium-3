@@ -14,9 +14,9 @@ abstract class DatabaseEntity {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    val creationDate: Date = Date()
+    val createdAt: Date = Date()
 
     @LastModifiedDate
     @Column(nullable = false)
-    val modificationDate: Date = Date()
+    val updatedAt: Date = Date()
 }

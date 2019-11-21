@@ -6,12 +6,21 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import pl.kamilszustak.blog.model.Post
 import pl.kamilszustak.blog.repository.PostRepository
+import java.util.*
 
 @Service
 @Primary
 class PostServiceImpl @Autowired constructor(
     private val postRepository: PostRepository
 ) : PostService {
+
+    init {
+        //println(postRepository.findContaining("afk"))
+        //println(postRepository.findAllCreatedAt(Date()))
+        //println(postRepository.findAllWithComments())
+        //println(postRepository.findFirst(3))
+        //println(postRepository.findAllCreatedBetween(Date(), Date()))
+    }
 
     override fun getAll(): List<Post> = postRepository.findAll()
 
