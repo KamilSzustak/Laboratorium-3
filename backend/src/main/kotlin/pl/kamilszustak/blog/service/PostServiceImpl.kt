@@ -20,6 +20,13 @@ class PostServiceImpl @Autowired constructor(
         //println(postRepository.findAllWithComments())
         //println(postRepository.findFirst(3))
         //println(postRepository.findAllCreatedBetween(Date(), Date()))
+        //println(postRepository.countAll())
+        //println(postRepository.countComments(1))
+        //println(postRepository.findAllByIds(arrayOf(1, 2)))
+        //println(postRepository.findAllWithoutComments())
+        //println(postRepository.findAllOrderedByCreatedAtDate())
+        //println(postRepository.findAllLongerThan(15))
+        //println(postRepository.findTheNewest())
     }
 
     override fun getAll(): List<Post> = postRepository.findAll()

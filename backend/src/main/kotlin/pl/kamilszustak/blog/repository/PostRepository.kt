@@ -14,7 +14,7 @@ interface PostRepository : JpaRepository<Post, Int> {
         value = "SELECT * FROM posts WHERE title LIKE %:text% OR content LIKE %:text%",
         nativeQuery = true
     )
-    fun findAllContaing(@Param("text") text: String): List<Post>
+    fun findAllContaining(@Param("text") text: String): List<Post>
 
     @Query(
         value = "SELECT * FROM posts WHERE created_at = :date",
@@ -23,10 +23,16 @@ interface PostRepository : JpaRepository<Post, Int> {
     fun findAllCreatedAt(@Param("date") date: Date): List<Post>
 
     @Query(
-        value = "SELECT * FROM posts post INNER JOIN comments comments ON comments.post_id = post.id",
+        value = "SELECT * FROM posts post WHERE (SELECT COUNT(*) FROM comments comment WHERE comment.post_id = post.id) > 0",
         nativeQuery = true
     )
     fun findAllWithComments(): List<Post>
+
+    @Query(
+        value = "SELECT * FROM posts post WHERE (SELECT COUNT(*) FROM comments comment WHERE comment.post_id = post.id) = 0",
+        nativeQuery = true
+    )
+    fun findAllWithoutComments(): List<Post>
 
     @Query(
         value = "SELECT TOP :amount * FROM posts",
@@ -39,4 +45,46 @@ interface PostRepository : JpaRepository<Post, Int> {
         nativeQuery = true
     )
     fun findAllCreatedBetween(@Param("startDate") startDate: Date, @Param("endDate") endDate: Date): List<Post>
+
+    @Query(
+        value = "SELECT COUNT(*) FROM posts",
+        nativeQuery = true
+    )
+    fun countAll(): Int
+
+    @Query(
+        value = "SELECT COUNT(*) FROM comments WHERE post_id = :postId",
+        nativeQuery = true
+    )
+    fun countComments(@Param("postId") postId: Long): Int
+
+    @Query(
+        value = "SELECT * FROM posts WHERE id IN :ids",
+        nativeQuery = true
+    )
+    fun findAllByIds(@Param("ids") ids: Array<Long>): List<Post>
+
+    @Query(
+        value = "SELECT * FROM posts ORDER BY created_at DESC;",
+        nativeQuery = true
+    )
+    fun findAllOrderedByCreatedAtDate(): List<Post>
+
+    @Query(
+        value = "SELECT * FROM posts WHERE content IS NOT NULL AND LENGTH(content) > :length",
+        nativeQuery = true
+    )
+    fun findAllLongerThan(@Param("length") length: Int): List<Post>
+
+    @Query(
+        value = "SELECT TOP 1 * FROM posts WHERE (SELECT MAX(id) FROM posts) = id",
+        nativeQuery = true
+    )
+    fun findTheNewest(): Post
+
+    @Query(
+        value = "SELECT TOP 1 * FROM posts WHERE (SELECT MIN(id) FROM posts) = id",
+        nativeQuery = true
+    )
+    fun findTheOldest(): Post
 }
