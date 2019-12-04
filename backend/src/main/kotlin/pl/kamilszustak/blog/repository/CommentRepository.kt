@@ -75,4 +75,10 @@ interface CommentRepository : JpaRepository<Comment, Int> {
         nativeQuery = true
     )
     fun findTheOldest(): Comment
+
+    @Query(
+        value = "SELECT * FROM comments GROUP BY post_id",
+        nativeQuery = true
+    )
+    fun findAllGroupedByPost(): List<Comment>
 }

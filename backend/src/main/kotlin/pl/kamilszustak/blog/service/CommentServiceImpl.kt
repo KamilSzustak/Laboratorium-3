@@ -15,6 +15,7 @@ class CommentServiceImpl @Autowired constructor(
 
     init {
         //println(commentRepository.findAllByPostId(1))
+        //println(commentRepository.findAllGroupedByPost())
     }
 
     override fun getAll(): List<Comment> = commentRepository.findAll()

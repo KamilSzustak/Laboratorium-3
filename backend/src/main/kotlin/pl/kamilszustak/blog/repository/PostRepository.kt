@@ -87,4 +87,10 @@ interface PostRepository : JpaRepository<Post, Int> {
         nativeQuery = true
     )
     fun findTheOldest(): Post
+
+    @Query(
+        value = "SELECT * FROM posts post INNER JOIN comments comment ON comment.id = :commentId",
+        nativeQuery = true
+    )
+    fun findByCommentId(@Param("commentId") commentId: Long): Post
 }
