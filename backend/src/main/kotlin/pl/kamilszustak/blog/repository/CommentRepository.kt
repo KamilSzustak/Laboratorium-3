@@ -82,3 +82,54 @@ interface CommentRepository : JpaRepository<Comment, Int> {
     )
     fun findAllGroupedByPost(): List<Comment>
 }
+
+/**
+    SELECT * FROM posts;
+
+    SELECT * FROM comments;
+    
+    SELECT * FROM posts WHERE title LIKE '%aa%' OR content LIKE '%aa%';
+
+    SELECT * FROM posts WHERE created_at = '2019-12-05 12:42:48.720000000';
+
+    SELECT * FROM posts post WHERE (SELECT COUNT(*) FROM comments comment WHERE comment.post_id = post.id) > 0;
+
+    SELECT * FROM posts post WHERE (SELECT COUNT(*) FROM comments comment WHERE comment.post_id = post.id) = 0;
+
+    SELECT * FROM posts LIMIT 3;
+
+    SELECT * FROM posts WHERE created_at BETWEEN '2019-12-05 12:42:37.412000000' AND '2019-12-05 12:42:41.882000000';
+
+    SELECT COUNT(*) FROM posts;
+
+    SELECT COUNT(*) FROM comments WHERE post_id = 1;
+
+    SELECT * FROM posts WHERE id IN (1, 2, 3);
+
+    SELECT * FROM posts ORDER BY created_at DESC;
+
+    SELECT * FROM posts WHERE content IS NOT NULL AND LENGTH(content) > 20;
+
+    SELECT * FROM posts WHERE (SELECT MAX(id) FROM posts) = id LIMIT 1;
+
+    SELECT * FROM posts WHERE (SELECT MIN(id) FROM posts) = id LIMIT 1;
+
+    SELECT * FROM posts post INNER JOIN comments comment ON comment.id = 1;
+
+    SELECT * FROM comments ORDER BY post_id;
+
+    DELETE FROM posts WHERE id = 3;
+
+    CREATE TABLE favourite_posts LIKE posts;
+
+    SELECT * FROM favourite_posts;
+
+    INSERT INTO favourite_posts SELECT * FROM posts post WHERE post.id = 2;
+
+    SELECT * FROM favourite_posts fav_post WHERE EXISTS(SELECT * FROM posts post WHERE post.id = fav_post.id AND post.title = fav_post.title AND post.content = fav_post.content AND post.created_at = fav_post.created_at AND post.updated_at = fav_post.updated_at);
+
+    SELECT * FROM favourite_posts fav_post INNER JOIN posts post ON fav_post.id = post.id;
+
+    DROP TABLE favourite_posts;
+
+ **/
