@@ -20,7 +20,11 @@ class EditPostPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8080/api/posts/${this.state.id}`)
+        fetch(`http://localhost:8080/api/posts/${this.state.id}`, {
+            headers: {
+                "Authorization": localStorage.getItem("basicAuth")
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 this.setState({
@@ -52,7 +56,8 @@ class EditPostPage extends React.Component {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
+                "Access-Control-Allow-Origin": "*",
+                "Authorization": localStorage.getItem("basicAuth")
             },
             body: JSON.stringify(post)
         })

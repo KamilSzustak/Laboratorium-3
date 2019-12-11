@@ -3,8 +3,10 @@ package pl.kamilszustak.blog.controller
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import pl.kamilszustak.blog.model.Post
+import pl.kamilszustak.blog.model.User
 import pl.kamilszustak.blog.service.PostService
 
 @RestController
@@ -32,7 +34,8 @@ class PostController @Autowired constructor(
     }
 
     @PostMapping
-    fun postPost(@RequestBody post: Post): ResponseEntity<Unit> {
+    fun postPost(@RequestBody post: Post, @AuthenticationPrincipal user: User?): ResponseEntity<Unit> {
+        post.user = user
         postService.add(post)
 
         return ResponseEntity(HttpStatus.CREATED)

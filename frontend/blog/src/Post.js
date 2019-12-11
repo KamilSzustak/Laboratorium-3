@@ -15,7 +15,7 @@ class Post extends React.Component {
             <div>
                 <h1>{this.state.post.title}</h1>
                 <div>
-                    <p>Date: {this.formatDateString(this.state.post.creationDate)} | Comments: {this.state.post.comments.length}</p>
+                    <p>Date: {this.formatDateString(this.state.post.createdAt)} | Comments: {this.state.post.comments.length}</p>
                 </div>
             </div>
         );

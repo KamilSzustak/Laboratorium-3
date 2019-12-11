@@ -22,7 +22,11 @@ class PostPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8080/api/posts/${this.state.id}`)
+        fetch(`http://localhost:8080/api/posts/${this.state.id}`, {
+            headers: {
+                "Authorization": localStorage.getItem("basicAuth")
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 this.setState({
@@ -35,7 +39,10 @@ class PostPage extends React.Component {
         const deletePost = window.confirm("Do you want to delete this post?");
         if (deletePost) {
             fetch(`http://localhost:8080/api/posts/${this.state.id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    "Authorization": localStorage.getItem("basicAuth")
+                }
             })
                 .then(() => {
                     this.setState({

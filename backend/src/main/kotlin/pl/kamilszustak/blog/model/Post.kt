@@ -1,5 +1,6 @@
 package pl.kamilszustak.blog.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import javax.persistence.*
 
@@ -12,6 +13,11 @@ data class Post(
     @Column(name = "content")
     var content: String = ""
 ) : DatabaseEntity() {
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    var user: User? = null
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])

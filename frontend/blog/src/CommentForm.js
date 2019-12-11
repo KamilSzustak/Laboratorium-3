@@ -19,7 +19,8 @@ class CommentForm extends React.Component {
         fetch(`http://localhost:8080/api/comments/${this.state.postId}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("basicAuth")
             },
             body: JSON.stringify({
                 content: this.state.content
