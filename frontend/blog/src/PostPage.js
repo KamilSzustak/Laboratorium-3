@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter, Redirect, Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { ButtonToolbar, Button, ListGroup } from 'react-bootstrap';
+import { Card, Typography } from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
 
 class PostPage extends React.Component {
     
@@ -58,16 +60,19 @@ class PostPage extends React.Component {
 
         return (
             <div>
-                <h1 style={{display: "inline"}}>{this.state.post.title}</h1>
-                <ButtonToolbar style={{display: "inline", marginLeft: "16px"}}>
-                    <Button variant="danger" size="sm" onClick={this.handleDeleteButtonClick}>Delete</Button>
-                    {" "}
-                    <Link to={`/edit/${this.state.id}`}>
-                        <Button variant="info" size="sm">Edit</Button>
-                    </Link>
-                </ButtonToolbar>
-                <p>{this.state.post.content}</p>
-                <h4>Comments</h4>
+                <Card style={{padding: "16px"}}>
+                    <Typography variant="h4" style={{display: "inline"}}>{this.state.post.title}</Typography>
+                    <ButtonToolbar style={{display: "inline", marginLeft: "16px"}}>
+                        <Button variant="danger" size="sm" onClick={this.handleDeleteButtonClick}>Delete</Button>
+                        {" "}
+                        <Link to={`/edit/${this.state.id}`}>
+                            <Button variant="info" size="sm">Edit</Button>
+                        </Link>
+                    </ButtonToolbar>
+                    <Typography variant="h6">{this.state.post.content}</Typography>
+                    <Rating max={5} />
+                </Card>
+                <h4 style={{marginTop: "16px"}}>Comments</h4>
                 <CommentForm data={this.state.id} />
                 <ListGroup>
                     {this.state.post.comments.map(comment => <ListGroup.Item key={comment.id} style={{marginTop: "16px"}}>{comment.content}</ListGroup.Item>)}

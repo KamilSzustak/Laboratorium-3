@@ -1,28 +1,67 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';    
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';    
 import PostPage from './PostPage';
 import MainPage from './MainPage';
 import NewPostPage from './NewPostPage';
 import EditPostPage from './EditPostPage';
-import Button from 'react-bootstrap/Button';
 import AuthorizationRoute from './AuthorizationRoute';
 import LoginPage from "./LoginPage";
 import SignUpPage from "./SignUpPage";
+import { Tooltip, Fab, FormGroup, Switch as MaterialSwitch, FormControlLabel } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 
 class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            darkModeEnabled: false,
+            backgroundColor: "#F8F8F8"
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({
+            darkModeEnabled: event.target.checked
+        }, () => {
+            if (this.state.darkModeEnabled) {
+                this.setState({
+                    backgroundColor: "#666666"
+                });
+            } else {
+                this.setState({
+                    backgroundColor: "#FFFFFF"
+                });
+            }
+        });
+    }
+
     render() {
         return (
-            <div>
+            <div style={{backgroundColor: this.state.backgroundColor, padding: "16px"}}>
                 <BrowserRouter>
                     <div style={{marginBottom: "16px"}}>
                         <Link to="/">
-                            <h1 style={{display: "inline"}}>Blog</h1>
+                            <Tooltip title="Click to refresh the main page">
+                                <h1 style={{display: "inline"}}>Blog</h1>
+                            </Tooltip>
                         </Link>
                         <Link to="/new">
-                            <Button variant="primary" style={{marginLeft: "16px"}}>New post</Button>
+                            <Tooltip title="Click to add a new post">
+                                <Fab color="primary" aria-label="New post" style={{marginLeft: "32px"}}>
+                                    <AddIcon />
+                                </Fab>
+                            </Tooltip>
                         </Link>
+                        <FormGroup style={{display: "inline", margin: "32px"}}>
+                            <FormControlLabel control={
+                                <MaterialSwitch checked={this.state.darkModeEnabled} onChange={this.handleChange} value="darkModeEnabled"/>
+                            } label="Dark mode"/>
+                        </FormGroup>
                     </div>
                     <div>
                         <Switch>

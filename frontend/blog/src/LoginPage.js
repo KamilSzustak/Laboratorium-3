@@ -30,7 +30,6 @@ class LoginPage extends React.Component {
         }
 
         const basicAuth = "Basic " + btoa(this.state.email + ":" + this.state.password);
-        console.log(basicAuth);
 
         fetch("http://localhost:8080/api/users/login", {
             method: "GET",
